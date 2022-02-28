@@ -1,1 +1,1 @@
-# pygame_tutorial
+Repository created to follow a pygame_tutorial.
