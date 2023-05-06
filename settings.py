@@ -1,16 +1,16 @@
-level_map =[
+level_map = [
     '                    ',
     '                    ',
     '                    ',
     '                    ',
     '                    ',
     '                    ',
-    '                    ',
-    'X                   ',
+    '     XX  XXX       ',
+    'XX                  ',
     'X     XX     XX     ',
     '  P XXXXX           ',
     'XXXXXX XXXXXX XXXX  ',
 ]
-tile_size = 64
+TILE_SIZE = 64
 WIDTH = 1200
-HEIGHT =len(level_map) * tile_size
+HEIGHT = len(level_map) * TILE_SIZE

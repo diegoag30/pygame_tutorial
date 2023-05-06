@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         # player status
         self.status = 'idle'
         self.is_facing_right = True
-        self.on_ground = True
+        self.on_ground = False
         self.on_ceiling = False
         self.on_left = False
         self.on_right = False
@@ -49,7 +49,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
-        if keys_pressed[pygame.K_SPACE] and self.remaining_jump > 0:  # SPACE
+        if keys_pressed[pygame.K_SPACE] and self.on_ground and self.remaining_jump > 0:  # SPACE
             self.jump()
             # self.remaining_jump = self.remaining_jump - 1
 
@@ -72,28 +72,27 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y
 
     def animate(self):
-        pass
-        # animation = self.animations[self.status]
+        animation = self.animations[self.status]
 
-        # # Loop over the frame index
-        # self.frame_index += self.animation_speed
-        # if self.frame_index >= len(animation):
-        #     self.frame_index = 0
+        # Loop over the frame index
+        self.frame_index += self.animation_speed
+        if self.frame_index >= len(animation):
+            self.frame_index = 0
 
-        # image = animation[int(self.frame_index)]
-        # if self.is_facing_right:
-        #     self.image = image
-        # else:
-        #     flipped_image = pygame.transform.flip(image, True, False)
-        #     self.image = flipped_image
+        image = animation[int(self.frame_index)]
+        if self.is_facing_right:
+            self.image = image
+        else:
+            flipped_image = pygame.transform.flip(image, True, False)
+            self.image = flipped_image
 
-        # # set the rectangle
-        # if self.on_ground:
-        #     self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
-        # elif self.on_ceiling:
-        #     self.rect = self.image.get_rect(midtop=self.rect.midtop)
-        # else:
-        #     self.rect = self.image.get_rect(center=self.rect.center)
+        # set the rectangle
+        if self.on_ground:
+            self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+        elif self.on_ceiling:
+            self.rect = self.image.get_rect(midtop=self.rect.midtop)
+        else:
+            self.rect = self.image.get_rect(center=self.rect.center)
 
     def update(self):
         self.get_input()

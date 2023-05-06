@@ -3,7 +3,7 @@ from re import X
 import pygame
 
 from player import Player
-from settings import WIDTH, tile_size
+from settings import TILE_SIZE, WIDTH
 from tile import Tile
 
 
@@ -14,15 +14,19 @@ class Level():
         self.world_shift = 0  # Maneja el movimiento del mapa 0 estatico, 1> se mueva a la derecha
 
     def setup_level(self, layout):
+        """ Draws tiles and player on the screen in his respective coordinates bassed on a given level layout.
+        Args:
+            layout (Surface): Pygame surface where the tiles of the level will be drawn.
+        """
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
-                # Reemplaza la X con un Tile
-                x = col_index * tile_size  # Coordenada X
-                y = row_index * tile_size  # Coordenada Y
+                # Gets the coordinates of the tile bassed on the index of the row and column
+                x = col_index * TILE_SIZE  # Coordenada X
+                y = row_index * TILE_SIZE  # Coordenada Y
                 if col == 'X':
-                    tile = Tile((x, y), tile_size)
+                    tile = Tile((x, y), TILE_SIZE)
                     self.tiles.add(tile)
                 # Reemplaza P con el player
                 elif col == 'P':
@@ -30,6 +34,8 @@ class Level():
                     self.player.add(player_sprite)
 
     def scroll_x(self):
+        """ Scrolls the level horizontally bassed on the player's position.
+        """
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
@@ -45,6 +51,9 @@ class Level():
             player.speed = 4
 
     def horizontal_movement_collision(self):
+        """
+        Checks if the player collides with any tile in the level horizontally.
+        """
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
 
@@ -56,6 +65,9 @@ class Level():
                     player.rect.right = sprite.rect.left
 
     def vertical_movement_collision(self):
+        """
+        Checks if the player collides with any tile in the level vertically.
+        """
         player = self.player.sprite
         player.apply_gravity()
         for sprite in self.tiles.sprites():
