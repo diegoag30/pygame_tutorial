@@ -6,6 +6,8 @@ import pygame
 
 from support import import_folder
 
+from .collisionHandler import CollisionHandler
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
@@ -31,6 +33,7 @@ class Player(pygame.sprite.Sprite):
         self.on_right = False
         self.remaining_jump = 2
         self.allow_jump = False
+        self.collision_handler = CollisionHandler(self)
 
     def import_character_assets(self):
         character_path = os.path.join('assets', 'character', 'wind_hashashin', 'sprites')
@@ -39,6 +42,14 @@ class Player(pygame.sprite.Sprite):
         for animation in self.animations.keys():
             full_path = os.path.join(character_path, animation)
             self.animations[animation] = import_folder(full_path)
+
+    def getColissions(self, sprite):
+        """Get the collisions of the player with the tiles.
+
+        Args:
+            sprite (_type_): The sprite that the player collides with.
+        """
+        self.collision_handler.collide(sprite)
 
     def get_input(self):
         keys_pressed = pygame.key.get_pressed()
