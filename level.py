@@ -1,5 +1,3 @@
-from re import X
-
 import pygame
 
 from player.player import Player
