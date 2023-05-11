@@ -65,10 +65,6 @@ class Player(pygame.sprite.Sprite):
         if self.on_ground:
             self.remaining_jump = 2
 
-        # if keys_pressed[pygame.K_SPACE] and self.on_ground and self.remaining_jump > 0:  # SPACE
-        #     self.jump()
-            # self.remaining_jump = self.remaining_jump - 1
-
     def getJump(self):
         if self.allow_jump:
             self.allow_jump = False
@@ -110,9 +106,9 @@ class Player(pygame.sprite.Sprite):
 
         # set the rectangle
         if self.on_ground:
-            self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+            self.collision_handler.animate(self)
         elif self.on_ceiling:
-            self.rect = self.image.get_rect(midtop=self.rect.midtop)
+            self.collision_handler.animate(self)
         else:
             self.rect = self.image.get_rect(midtop=self.rect.midtop)
 

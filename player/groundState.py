@@ -8,5 +8,5 @@ class GroundState(State):
         player.direction.y = 0
         player.on_ground = True
 
-    def get_animation(self, player, sprite, pos_x, pos_y):
-        pass
+    def get_animation(self, player):
+        player.rect = player.image.get_rect(midbottom=player.rect.midbottom)

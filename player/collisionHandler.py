@@ -15,3 +15,6 @@ class CollisionHandler:
         elif self.player.direction.y < 0:
             self.state = CeillingState()
             self.state.get_collision(self.player, sprite)
+
+    def animate(self, player):
+        self.state.get_animation(player)

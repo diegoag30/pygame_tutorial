@@ -8,5 +8,5 @@ class CeillingState(State):
         player.direction.y = 0
         player.on_ceiling = True
 
-    def get_animation(self, player, sprite, pos_x, pos_y):
-        pass
+    def get_animation(self, player):
+        player.rect = player.image.get_rect(midtop=player.rect.midtop)
