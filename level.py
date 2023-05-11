@@ -88,7 +88,7 @@ class Level():
             player.on_ceiling = False
 
     def player_jump(self, jump_flag):
-        """ Makes the player jump if he is on the ground.
+        """ Sends a flag to the player to allow him to jump(when w is pressed one time not keep).
         """
         player = self.player.sprite
         player.allow_jump = jump_flag
