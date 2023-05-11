@@ -8,6 +8,7 @@ from tile import Tile
 
 
 class Level():
+
     def __init__(self, level_data, surface):
         self.display_surface = surface
         self.setup_level(level_data)
@@ -85,6 +86,12 @@ class Level():
             player.on_ground = False
         if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
+
+    def player_jump(self, jump_flag):
+        """ Makes the player jump if he is on the ground.
+        """
+        player = self.player.sprite
+        player.allow_jump = jump_flag
 
     def run(self):
         # Level Map

@@ -1,11 +1,9 @@
 import os
 
 import pygame
-from sqlalchemy import true
 
 from level import Level
 from settings import *
-from tile import Tile
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 BACKGROUND_COLOR = (0, 0, 0)
@@ -38,17 +36,22 @@ def draw_window():
 
 
 def main():
-    is_jump = False
-    jump_count = 10
     # player_one = pygame.Rect(20,400,MAIN_CHARACTER_WIDHT,MAIN_CHARACTER_HEIGHT)
     clock = pygame.time.Clock()
     run = True
     # MAIN LOOP
+    jump_count = 0
+    jump_flag = False
     while run:
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_w:
+                    jump_flag = True
+                    level.player_jump(jump_flag)
+
+                   # print("Tecla apretada " + str(jump_count) + " veces")
 
         WIN.fill((BACKGROUND_COLOR))
         level.run()

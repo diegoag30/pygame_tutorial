@@ -1,5 +1,6 @@
+
+import importlib
 import os
-from pickle import TRUE
 
 import pygame
 
@@ -28,7 +29,8 @@ class Player(pygame.sprite.Sprite):
         self.on_ceiling = False
         self.on_left = False
         self.on_right = False
-        self.remaining_jump = 4
+        self.remaining_jump = 2
+        self.allow_jump = False
 
     def import_character_assets(self):
         character_path = os.path.join('assets', 'character', 'wind_hashashin', 'sprites')
@@ -49,9 +51,19 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
-        if keys_pressed[pygame.K_SPACE] and self.on_ground and self.remaining_jump > 0:  # SPACE
-            self.jump()
+        if self.on_ground:
+            self.remaining_jump = 2
+
+        # if keys_pressed[pygame.K_SPACE] and self.on_ground and self.remaining_jump > 0:  # SPACE
+        #     self.jump()
             # self.remaining_jump = self.remaining_jump - 1
+
+    def getJump(self):
+        if self.allow_jump:
+            self.allow_jump = False
+            if self.remaining_jump > 0:
+                self.jump()
+                self.remaining_jump = self.remaining_jump - 1
 
     def get_status(self):
         if self.direction.y < 0:
@@ -73,7 +85,6 @@ class Player(pygame.sprite.Sprite):
 
     def animate(self):
         animation = self.animations[self.status]
-
         # Loop over the frame index
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
@@ -92,9 +103,10 @@ class Player(pygame.sprite.Sprite):
         elif self.on_ceiling:
             self.rect = self.image.get_rect(midtop=self.rect.midtop)
         else:
-            self.rect = self.image.get_rect(center=self.rect.center)
+            self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
     def update(self):
         self.get_input()
+        self.getJump()
         self.get_status()
         self.animate()
